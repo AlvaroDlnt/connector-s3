@@ -25,6 +25,14 @@ Now, we are going to explain how to run the script:
 	# Install boto-2.48.0 
 	pip install boto
 
+	# Before than execute the script you must create 2 enviroment variables with your API_KEYS.
+	# Open the file with environment vars.
+	sudo -H gedit /etc/environment
+
+	# Crete two lines with your access key
+	AWS_ACCESS_KEY_ID = "<acces_key>"
+	AWS_SECRET_ACCESS_KEY = "<secret_key>"
+
 	# Execute script. Success example
 	python test_check_file_console.py 'alvaro-test' 'foobar'
 
@@ -40,7 +48,7 @@ Now, we are going to explain how to run the script:
 	# File doesnt exist
 
 
-	# "Automated test" (see the file)
+	# Execute "Automated test" (see the file)
 	python test_check_file.py
 
 
