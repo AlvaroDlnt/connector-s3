@@ -1,83 +1,47 @@
+This program provide functions to check if a file or a bucket exists in a S3 file system.
 
-Using Python 2.7.12
+Now, we are going to explain how to run the script:
+	The result script was made using Python 2.7.12
 
-sudo apt-get install python-pip
+	Install pip 8.1.1:
+	sudo apt-get install python-pip
 
-Using pip 8.1.1
+	Install virtual environment:
+	pip install virtualenv
 
-pip install virtualenv
+	# Create folder for the project
+	mkdir connector-s3
 
-Using
+	# Create virtual environment inside the folder project.
+	virtualenv connector-s3
 
-# Create de virtual environment
-virtualenv connector-s3
+	# Activate shell script for virt.env
+	# Initial path = connector-s3
+	source ./bin/activate
 
-# Activate shell script for virt.env
-source bin/activate
+	(# Deactive virtual env)
+	(deactivate)
 
-# Undo the changes
-deactivate
+	# Install boto-2.48.0 
+	pip install boto
 
-# 
-pip install boto
-Using boto-2.48.0
+	# Execute script. Success example
+	python test_check_file_console.py 'alvaro-test' 'foobar'
 
-./lib/python2.7/site-packages
+	#Output:
+	# Bucket exist
+	# File exist
 
+	# Execute script with command line. Failure example
+	python test_check_file_console.py 'alvaro-test' 'asdf'
 
-
-
-
-# Imports y conexión a S3
-import boto
-from boto.s3.key import Key
-
-connection = boto.connect_s3()
-
-
-#Crear bucket.
-
-bucket = connection.create_bucket('alvaro-test')
-
-#Crear fichero dentro de un bucket.
-file = Key(bucket)
-file.key = 'key_for_file'
-file.set_contents_from_string('This is the content of a file')
+	#Output:
+	# Bucket exist
+	# File doesnt exist
 
 
-#Listar fichero dentro de un bucket.
-
-bucket_alvaro = connection.get_bucket('alvaro-test')
-
-#Comprobar si existe un fichero
-bucket_alvaro = connection.get_bucket('alvaro-test')
-fichero_recuperado = bucket_alvaro.get_key('asdf')
-if fichero_recuperado is None:
-    print "This Key doesn't exist."
+	# "Automated test" (see the file)
+	python test_check_file.py
 
 
 
-#Ver contenido de un fichero dentro de un bucket.
-file = Key(bucket_alvaro)
-file.key = 'asdf'
-file.get_contents_as_string()
-
-
-
-# Listar Buckets existentes.
-
-connection = boto.connect_s3()
-bucket_alvaro = connection.get_bucket('alvaro-test')
-
-
-bucket_content = bucket_alvaro.list()
-
-
-for b in bucket_content:
-	print b.name
-
-
-# Comprobar si existe un bucket.
-bucket_content = connection.lookup('alvaro-test')
-if bucket_content is None:
-    print "This bucket doesn't exist."

@@ -1,0 +1,54 @@
+#Code to create bucket.
+
+
+# Imports y conexión a S3
+import boto
+from boto.s3.key import Key
+
+connection = boto.connect_s3()
+
+
+# Create bucket.
+
+bucket = connection.create_bucket('alvaro-test')
+
+# Create file inside a bucket
+file = Key(bucket)
+file.key = 'key_for_file'
+file.set_contents_from_string('This is the content of a file')
+
+
+# Check if file exist inside a bucket.
+
+bucket_alvaro = connection.get_bucket('alvaro-test')
+
+bucket_alvaro = connection.get_bucket('alvaro-test')
+fichero_recuperado = bucket_alvaro.get_key('asdf')
+if fichero_recuperado is None:
+    print "This Key doesn't exist."
+
+
+# Retrieve file content
+file = Key(bucket_alvaro)
+file.key = 'asdf'
+file.get_contents_as_string()
+
+
+
+# List all existing buckets.
+
+connection = boto.connect_s3()
+bucket_alvaro = connection.get_bucket('alvaro-test')
+
+
+bucket_content = bucket_alvaro.list()
+
+
+for b in bucket_content:
+	print b.name
+
+
+# Check if a bucket exist
+bucket_content = connection.lookup('alvaro-test')
+if bucket_content is None:
+    print "This bucket doesn't exist."
